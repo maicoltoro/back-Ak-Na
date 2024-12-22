@@ -7,6 +7,7 @@ class ModelDias extends Model<InterDias> implements InterDias {
     public dia!: string;
     public envioGratis!: number;
     public id!: number;
+    public FechaEnvioGratis!: Date;
 }
 
 ModelDias.init(
@@ -27,6 +28,10 @@ ModelDias.init(
             type: DataTypes.INTEGER.UNSIGNED,
             autoIncrement: true,
             primaryKey: true,
+        },
+        FechaEnvioGratis : {
+            type: DataTypes.DATE,
+            allowNull: true,
         }
     },
     {

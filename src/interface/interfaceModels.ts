@@ -38,6 +38,7 @@ export  interface InterProductos {
     Descripcion : string
     Activo : number
     imagen : string
+    FechaInsercion :Date
 }
 
 export interface InterDias {
@@ -45,6 +46,7 @@ export interface InterDias {
     dia: string
     activo : number
     envioGratis : number
+    FechaEnvioGratis :Date
 }
 
 export interface InterTipoIdentificacion {
@@ -59,4 +61,13 @@ export interface InterFactura {
     Tiempo? : number
     HoraInicio? : string
     HoraFin? :string
+    Precio? :string
+    Imagen?: string
+    Nombre?:string
+}
+
+export interface InterValorEnvio {
+    ID: number
+    ValorEnvio : number
+    FechaActualizacion : Date
 }

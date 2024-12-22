@@ -16,6 +16,7 @@ class ModelProducts extends Model<InterProductos> implements InterProductos {
     public Nombre!: string;
     public Precio!: number;
     public imagen!: string;
+    public FechaInsercion!: Date;
 }
 
 ModelProducts.init({
@@ -71,6 +72,10 @@ ModelProducts.init({
     Precio: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: true,
+    },
+    FechaInsercion : {
+        type: DataTypes.DATE,
+        allowNull: false,
     }
 },
     {
