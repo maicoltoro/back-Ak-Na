@@ -1,9 +1,9 @@
 import { start } from "repl";
-import ModelInformacionPedidos from "../Models/ModelInformacionPedidos";
 import sequelize from "../config/database";
 import ModelTipoDocumento from "../Models/ModelTipoDocumento";
 import { QueryTypes } from 'sequelize';
 import { InterFactura } from "../interface/interfaceModels";
+import { optionMail } from "../email/ConfigEmail";
 
 export class CarritoController {
 
@@ -40,7 +40,6 @@ export class CarritoController {
                     },
                 }
             );
-            //console.log( algo.IdPedido)
             const idPedido = resultado.filter((e : any) => e == e )[0].IdPedido
             const facturaItems : InterFactura[] = Object.values(objfactura);
             for (const product of facturaItems) {
@@ -66,8 +65,10 @@ export class CarritoController {
                     }
                 )
             }
+            await optionMail(facturaItems, valorCompra, correo, "Confirmacion de pedido")
             res.json({status: 200 , response: idPedido})
         } catch (error) {
+            console.log(error)
             res.status(400).json({ error });
         }
     }

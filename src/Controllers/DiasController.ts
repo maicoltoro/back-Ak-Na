@@ -1,5 +1,6 @@
 import { start } from "../config/Conection";
 import ModelDias from "../Models/ModelDias";
+import ModelValorEnvio from "../Models/ModelValorEnvio";
 
 export class DiasController {
 
@@ -14,7 +15,17 @@ export class DiasController {
 
             res.json(diasEntrega);
         } catch (error) {
-            res.status(500).json({ error: 'Error al obtener las categorías' });
+            res.status(500).json({ error });
+        }
+    }
+
+    static async getValorEnvio(req: any, res: any){
+        try {
+            await start();
+            let Valor = await ModelValorEnvio.findAll()
+            res.json(Valor);
+        } catch (error) {
+            res.status(500).json({ error });
         }
     }
 }
