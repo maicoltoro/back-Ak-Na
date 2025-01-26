@@ -12,20 +12,19 @@ export class DiasController {
                     $activo$: 1
                 }
             })
-
-            res.json(diasEntrega);
+            res.json({ status: 200, response: diasEntrega })
         } catch (error) {
-            res.status(500).json({ error });
+            res.json({ status: 500, response: error })
         }
     }
 
-    static async getValorEnvio(req: any, res: any){
+    static async getValorEnvio(req: any, res: any) {
         try {
             await start();
             let Valor = await ModelValorEnvio.findAll()
-            res.json(Valor);
+            res.json({ status: 200, response: Valor })
         } catch (error) {
-            res.status(500).json({ error });
+            res.json({ status: 500, response: error })
         }
     }
 }

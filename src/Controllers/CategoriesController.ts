@@ -12,9 +12,9 @@ export class CategoryController {
                     '$Activa$': true
                 }
             });
-            res.json(categorias);
+            res.json({status : 200 , response : categorias});
         } catch (error) {
-            res.status(500).json({ error });
+            res.json({ status: 500, response: error })
         }
     }
 
@@ -24,9 +24,9 @@ export class CategoryController {
             await start()
             const marca = await sequelize.query(`
                 EXEC [dbo].[Sp_FiltarPorCategoria] ${id}`,)
-            res.json(marca);
+            res.json({status : 200 , response : marca});
         } catch (error) {
-            res.status(500).json({ error });
+            res.json({ status: 500, response: error })
         }
     }
 }

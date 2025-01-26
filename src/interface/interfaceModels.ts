@@ -71,3 +71,17 @@ export interface InterValorEnvio {
     ValorEnvio : number
     FechaActualizacion : Date
 }
+
+export interface InterImagenesProyecto{
+    ID: number
+    IdProyecto: number
+    LugarImagen :string
+    UrlImagen : string
+}
+
+export interface InterLogin{
+    Id: number
+    Correo : string
+    Contrasenna : string
+    Rol : number
+}

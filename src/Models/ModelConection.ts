@@ -4,5 +4,5 @@ export const USER_BBDD : OBJ_USER_BBDD ={
     user : 'maicol',
     password : "maicol12345",
     dataBase : "AK-NA",
-    host : 'DESKTOP-ICNGR4U'
+    host : 'DESKTOP-HRMROUH'
 }

@@ -10,7 +10,7 @@ export class CarritoController {
     static async GuardarCompra(req: any, res: any) {
         try {
             const data = req.body;
-            const { nombre, correo, direccion, telefono,suscripcionNoticias,valorCompra, departamento, tipoIdentificacion, numeroIdentificacion, ...objfactura } = data;
+            const { nombre, correo, direccion, telefono, suscripcionNoticias, valorCompra, departamento, tipoIdentificacion, numeroIdentificacion, ...objfactura } = data;
             await start()
             const resultado = await sequelize.query<InsertarCompraResult>(
                 `
@@ -40,8 +40,8 @@ export class CarritoController {
                     },
                 }
             );
-            const idPedido = resultado.filter((e : any) => e == e )[0].IdPedido
-            const facturaItems : InterFactura[] = Object.values(objfactura);
+            const idPedido = resultado.filter((e: any) => e == e)[0].IdPedido
+            const facturaItems: InterFactura[] = Object.values(objfactura);
             for (const product of facturaItems) {
                 await sequelize.query(`
                     EXEC [dbo].[Sp_InsertDetalleCompra]
@@ -66,20 +66,19 @@ export class CarritoController {
                 )
             }
             await optionMail(facturaItems, valorCompra, correo, "Confirmacion de pedido")
-            res.json({status: 200 , response: idPedido})
+            res.json({ status: 200, response: idPedido })
         } catch (error) {
-            console.log(error)
-            res.status(400).json({ error });
+            res.json({ status: 500, response: error })
         }
     }
 
-    static async getAllTipoIdentificacion(req: any, res: any){
+    static async getAllTipoIdentificacion(req: any, res: any) {
         try {
             await start()
             let tipo = await ModelTipoDocumento.findAll()
-            res.json(tipo);
+            res.json({ status: 200, response: tipo });
         } catch (error) {
-            res.status(500).json({ error});
+            res.json({ status: 500, response: error })
         }
     }
 }
