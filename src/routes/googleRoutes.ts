@@ -11,7 +11,7 @@ googleRouter.post('/InsertFile', upload.any(), async (req: any, res: any) => {
         let respuesta = await uploadFile2(files[0], body.carpeta, body.proyecto)
         if (respuesta != null) {
             let url = respuesta.toString()
-            //await InventarioController.InsertProdcuto(body, url)
+            await InventarioController.InsertProdcuto(body, url)
             res.send({ status: 200, response: respuesta })
         }
     } catch (error) {

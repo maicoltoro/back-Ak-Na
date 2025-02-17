@@ -4,7 +4,7 @@ import { Stream } from 'stream';
 import { start } from "../config/Conection";
 import ModelImagenProyecto from '../Models/ModelImagenesProyecto';
 import { Octokit } from '@octokit/rest'
-import { prueba } from '../Middleware/Middleware';
+import { token } from '../Middleware/Middleware';
 
 const KEYFILEPATH = path.join("src\\config" + '\\credentials.json');
 const SCOPRES = ['https://www.googleapis.com/auth/drive'];
@@ -109,7 +109,7 @@ async function listFolders(carpeta: string) {
     }
 }
 
-const octokit = new Octokit({ auth: prueba });
+const octokit = new Octokit({ auth: token });
 
 export async function uploadFile2(archivo: any, carpeta: string, proyecto: string) {
     const owner = "MasterDevone";

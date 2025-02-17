@@ -101,11 +101,13 @@ export class InventarioController {
 
             let respuestaPedido = await sequelize.query<Sp_InformacionPedido>(
                 `EXEC [dbo].[Sp_InformacionPedido]
-                    @mes = :mes
+                    @mes = :mes,
+                    @anno = :anno
                 `, {
                 type: QueryTypes.SELECT,
                 replacements: {
                     mes: body.mes,
+                    anno: body.anno
                 }
             });
             let pedidos = ''
