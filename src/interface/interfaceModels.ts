@@ -85,3 +85,10 @@ export interface InterLogin{
     Contrasenna : string
     Rol : number
 }
+
+export interface InterInventario{
+    Id: number
+    idProducto : number
+    cantidad : number
+    FechaActualizacion : Date
+}

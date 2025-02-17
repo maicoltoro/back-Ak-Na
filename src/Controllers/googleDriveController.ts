@@ -3,6 +3,8 @@ import { google } from 'googleapis';
 import { Stream } from 'stream';
 import { start } from "../config/Conection";
 import ModelImagenProyecto from '../Models/ModelImagenesProyecto';
+import { Octokit } from '@octokit/rest'
+import { token } from '../Middleware/Middleware';
 
 const KEYFILEPATH = path.join("src\\config" + '\\credentials.json');
 const SCOPRES = ['https://www.googleapis.com/auth/drive'];
@@ -104,5 +106,59 @@ async function listFolders(carpeta: string) {
     } catch (error) {
         console.error('Error fetching folders:', error);
         throw error;
+    }
+}
+
+const octokit = new Octokit({ auth: token });
+
+export async function uploadFile2(archivo: any, carpeta: string, proyecto: string) {
+    const owner = "MasterDevone";
+    const repo = "Imagenes";
+    const branch = "main"; // Cambia esto si usas otra rama
+    const folderPath = `${proyecto}/${carpeta}`;
+    const filePath = `${folderPath}/${archivo.originalname}`;
+
+    try {
+        // Subir la imagen al repositorio
+        const response = await octokit.repos.createOrUpdateFileContents({
+            owner,
+            repo,
+            path: filePath,
+            message: `Subiendo imagen ${archivo.originalname}`,
+            content: archivo.buffer.toString("base64"),
+            branch: branch, // Asegurar que se sube a la rama correcta
+        });
+
+        // Verificar que el archivo se subió correctamente
+        if (!response.data.content) {
+            throw new Error("No se pudo obtener la información del archivo subido.");
+        }
+
+        // Construir la URL RAW correctamente
+        const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${filePath}`;
+
+        return rawUrl;
+    } catch (error) {
+        console.error("Error subiendo la imagen a GitHub:", error);
+    }
+}
+
+async function checkAndCreateFolder(owner: string, repo: string, folderPath: string) {
+    try {
+        await octokit.repos.getContent({
+            owner,
+            repo,
+            path: folderPath,
+        });
+    } catch (error: any) {
+        if (error.status === 404) {
+            await octokit.repos.createOrUpdateFileContents({
+                owner,
+                repo,
+                path: `${folderPath}/.gitkeep`,
+                message: `Creando carpeta ${folderPath}`,
+                content: Buffer.from("").toString("base64"),
+            });
+        }
     }
 }
