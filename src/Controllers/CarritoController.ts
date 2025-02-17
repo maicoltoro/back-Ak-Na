@@ -51,7 +51,8 @@ export class CarritoController {
                         @DiaEntrega = :DiaEntrega,
                         @Tiempo = :Tiempo,
                         @Horainicio = :Horainicio,
-                        @horaFin = :horaFin`,
+                        @horaFin = :horaFin,
+                        @precio  = :precio`,
                     {
                         replacements: {
                             idPedido,
@@ -61,6 +62,7 @@ export class CarritoController {
                             Tiempo: product.Tiempo,
                             Horainicio: product.HoraInicio,
                             horaFin: product.HoraFin,
+                            precio: product.Precio,
                         },
                     }
                 )

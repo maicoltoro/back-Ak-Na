@@ -2,6 +2,7 @@ import { start } from "../config/Conection";
 import sequelize from "../config/database";
 import { QueryTypes } from 'sequelize';
 import { Sp_Informacionfactura, Sp_InformacionPedido, Sp_traerInventario } from "../interface/interfaceSp";
+import { EnvioMailEstado } from "../email/ConfigEmail";
 
 export class InventarioController {
     static async getAllInventario(req: any, res: any) {
@@ -129,7 +130,7 @@ export class InventarioController {
     }
 
     static async CambiarEstado(req: any, res: any) {
-        const { pedidos, idEstado } = req.body
+        const { pedidos, idEstado, correo,nombreUsuario,estado } = req.body
         try {
             await start();
             await sequelize.query<Object>(
@@ -143,8 +144,10 @@ export class InventarioController {
                     idEstado: idEstado
                 }
             });
-            res.json({status: 200})
+            let response = await EnvioMailEstado( estado,correo, "Estado de tu pedido",nombreUsuario,pedidos )
+            res.json({status: 200, response  })
         } catch (error) {
+            console.log(error)
             res.json({ status: 500, response: error })
         }
     }

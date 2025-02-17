@@ -1,6 +1,7 @@
 import { start } from "../config/Conection";
+import ModelInventario from "../Models/ModelInventario";
 import ModelProducts from "../Models/ModelProducts";
-import { Op } from 'sequelize';
+import { Model, Op } from 'sequelize';
 
 export class ProductController {
     static async getAll(req: any, res: any) {
@@ -11,7 +12,13 @@ export class ProductController {
                 where: {
                     $IdCategoria$: parseInt(id),
                     $Activo$: 1
-                }
+                },
+                include : [
+                    {
+                        model : ModelInventario,
+                        as: 'Inventario',
+                    }
+                ]
             })
             res.json({ status: 200, response: products })
         } catch (error) {
@@ -46,9 +53,16 @@ export class ProductController {
                     $Activo$: 1
                 }, limit: 4,
                 order: [['FechaInsercion', 'DESC']],
+                include : [
+                    {
+                        model : ModelInventario,
+                        as: 'Inventario',
+                    }
+                ]
             })
             res.json({ status: 200, response: products })
         } catch (error) {
+            console.log(error)
             res.json({ status: 500, response: error })
         }
     }

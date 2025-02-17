@@ -1,6 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import { InterProductos } from "../interface/interfaceModels";
 import sequelize from '../config/database';
+import ModelInventario from "./ModelInventario";
 
 class ModelProducts extends Model<InterProductos> implements InterProductos {
     public Activo!: number;
@@ -84,5 +85,8 @@ ModelProducts.init({
         timestamps: false,
     }
 )
+
+ModelProducts.hasMany(ModelInventario, { foreignKey: 'idProducto', as: 'Inventario' });
+ModelInventario.belongsTo(ModelProducts, { foreignKey: 'idProducto', as: 'Producto' });
 
 export default ModelProducts

@@ -6,14 +6,14 @@ export const corsOptions = {
     allowedHeaders: ['Content-Type', 'Authorization'], // Encabezados permitidos
     credentials: true, // Permitir el uso de cookies y cabeceras de autenticación
 };
-
+export const prueba = ""
 export const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,   
     secure :true,
     auth: {
-        user: 'maicolestegantoro@gmail.com',
-        pass: 'jbtz zgil djih nlic',
+        user: 'masterdevone@gmail.com',
+        pass: 'frqb zqwa yazo pvpj',
     },
 });
 
