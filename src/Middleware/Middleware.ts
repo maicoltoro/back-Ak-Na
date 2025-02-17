@@ -6,7 +6,7 @@ export const corsOptions = {
     allowedHeaders: ['Content-Type', 'Authorization'], // Encabezados permitidos
     credentials: true, // Permitir el uso de cookies y cabeceras de autenticación
 };
-export const prueba = ""
+export const token = ""
 export const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,   
