@@ -21,11 +21,11 @@ export class InventarioController {
     }
 
     static async UpdateInventario(req: any, res: any) {
-        const { datos } = req.body
+        const { body } = req
         try {
             await start();
-            let respuesta = await sequelize.query<Sp_traerInventario>(
-                `EXEC [dbo].[Sp_traerInventario]
+            let respuesta = await sequelize.query<Object>(
+                `EXEC [dbo].[Sp_UpdateInventario]
                     @IdProducto = :IdProducto,
                     @Cantidad = :Cantidad,
                     @Nombre = :Nombre,
@@ -38,19 +38,20 @@ export class InventarioController {
                 `, {
                 type: QueryTypes.SELECT,
                 replacements: {
-                    IdProducto: datos.ID,
-                    Cantidad: datos.Cantidad,
-                    Nombre: datos.Nombre,
-                    precio: datos.Precio,
-                    CantidadDescuento: datos.CantidadDescuento,
-                    fechaIni: datos.fechaIni,
-                    fechaFin: datos.fechaFin,
-                    Descripcion: datos.Descripcion,
-                    Activo: datos.Activo
+                    IdProducto: body.IdProducto,
+                    Cantidad: body.Cantidad,
+                    Nombre: body.Nombre,
+                    precio: body.precio,
+                    CantidadDescuento: body.CantidadDescuento,
+                    fechaIni: body.fechaIni,
+                    fechaFin: body.fechaFin,
+                    Descripcion: body.Descripcion,
+                    Activo: body.Activo
                 }
             });
             res.json({ status: 200, response: respuesta })
         } catch (error) {
+            console.log(error)
             res.json({ status: 500, response: error })
         }
     }
